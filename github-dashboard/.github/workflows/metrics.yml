@@ -1,0 +1,58 @@
+name: Refresh Systems Telemetry
+
+on:
+  schedule:
+    # Run every day at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'src/**'
+      - 'assets/**'
+      - 'package.json'
+
+permissions:
+  contents: write
+
+jobs:
+  telemetry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify Test Suite
+        run: |
+          npm test
+
+      - name: Generate Telemetry SVG
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run generate
+
+      - name: Commit and Push Updated Telemetry
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          if [ -n "$(git status --porcelain assets/profile-telemetry.svg)" ]; then
+            git add assets/profile-telemetry.svg
+            git commit -m "chore(telemetry): update profile telemetry dashboard [skip ci]"
+            git push
+            echo "Telemetry updated and pushed successfully."
+          else
+            echo "No changes detected in telemetry."
+          fi

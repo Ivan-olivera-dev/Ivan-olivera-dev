@@ -1,0 +1,19 @@
+{
+  "name": "ivan-olivera-dev-github-dashboard",
+  "version": "1.0.0",
+  "description": "Bespoke GitHub Profile Dashboard and SVG Metrics Generator for @Ivan-olivera-dev",
+  "type": "module",
+  "scripts": {
+    "generate": "node --experimental-strip-types src/index.ts",
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
+  },
+  "keywords": [
+    "github-profile",
+    "dashboard",
+    "metrics",
+    "svg-generator",
+    "systems-architecture"
+  ],
+  "author": "Iván Olivera González <ivanoliveradev@gmail.com>",
+  "license": "MIT"
+}
