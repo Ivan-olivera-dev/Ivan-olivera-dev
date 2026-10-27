@@ -255,28 +255,28 @@
 
     
     <g transform="translate(0, 24)">
-      <text x="0" y="0" class="lang-name">TypeScript &amp; Node.js</text>
-      <text x="236" y="0" text-anchor="end" class="lang-pct">44%</text>
+      <text x="0" y="0" class="lang-name">TypeScript</text>
+      <text x="236" y="0" text-anchor="end" class="lang-pct">68%</text>
       <rect x="0" y="7" width="236" height="4.5" rx="2.25" fill="#18181c" />
-      <rect x="0" y="7" width="104" height="4.5" rx="2.25" fill="url(#bar-emerald)" />
+      <rect x="0" y="7" width="160" height="4.5" rx="2.25" fill="url(#bar-emerald)" />
     </g>
     <g transform="translate(0, 58)">
       <text x="0" y="0" class="lang-name">Python</text>
-      <text x="236" y="0" text-anchor="end" class="lang-pct">26%</text>
+      <text x="236" y="0" text-anchor="end" class="lang-pct">25%</text>
       <rect x="0" y="7" width="236" height="4.5" rx="2.25" fill="#18181c" />
-      <rect x="0" y="7" width="61" height="4.5" rx="2.25" fill="#34d399" />
+      <rect x="0" y="7" width="59" height="4.5" rx="2.25" fill="#34d399" />
     </g>
     <g transform="translate(0, 92)">
-      <text x="0" y="0" class="lang-name">Linux &amp; Shell (Bash)</text>
-      <text x="236" y="0" text-anchor="end" class="lang-pct">18%</text>
+      <text x="0" y="0" class="lang-name">Shell</text>
+      <text x="236" y="0" text-anchor="end" class="lang-pct">6%</text>
       <rect x="0" y="7" width="236" height="4.5" rx="2.25" fill="#18181c" />
-      <rect x="0" y="7" width="42" height="4.5" rx="2.25" fill="#6ee7b7" />
+      <rect x="0" y="7" width="14" height="4.5" rx="2.25" fill="#6ee7b7" />
     </g>
     <g transform="translate(0, 126)">
-      <text x="0" y="0" class="lang-name">Java</text>
-      <text x="236" y="0" text-anchor="end" class="lang-pct">12%</text>
+      <text x="0" y="0" class="lang-name">Dockerfile</text>
+      <text x="236" y="0" text-anchor="end" class="lang-pct">2%</text>
       <rect x="0" y="7" width="236" height="4.5" rx="2.25" fill="#18181c" />
-      <rect x="0" y="7" width="28" height="4.5" rx="2.25" fill="#52525b" />
+      <rect x="0" y="7" width="8" height="4.5" rx="2.25" fill="#52525b" />
     </g>
 
     <!-- Activity Sparkline Graph Card -->
