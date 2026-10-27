@@ -43,7 +43,7 @@ test("renderTelemetrySvg generates well-formed SVG with editorial dimensions", (
   assert.ok(svg.startsWith("<svg"), "SVG should start with <svg root tag");
   assert.ok(svg.endsWith("</svg>"), "SVG should close with </svg>");
   assert.ok(svg.includes('xmlns="http://www.w3.org/2000/svg"'), "SVG should include xmlns namespace");
-  assert.ok(svg.includes('viewBox="0 0 860 410"'), "SVG should have 860x410 viewBox");
+  assert.ok(svg.includes('viewBox="0 0 890 430"'), "SVG should have 890x430 viewBox");
 });
 
 test("renderTelemetrySvg includes ODD topology, animations, and dark aesthetic", () => {

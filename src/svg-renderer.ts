@@ -20,100 +20,100 @@ function escapeXml(unsafe: string): string {
 }
 
 export function renderTelemetrySvg(metrics: SystemMetrics, options: RenderOptions = {}): string {
-  const width = options.width || 860;
-  const height = options.height || 410;
+  const width = options.width || 890;
+  const height = options.height || 430;
 
-  const langBarMaxWidth = 236;
+  const langBarMaxWidth = 248;
   const techChips = ["Node.js", "TypeScript", "Python", "Docker", "Linux"];
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" fill="none">
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" width="100%" height="${height}" fill="none">
   <defs>
     <style>
       .name {
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
-        font-size: 21px;
+        font-size: 23px;
         font-weight: 600;
         fill: #f4f4f5;
         letter-spacing: -0.4px;
       }
       .role {
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 400;
         fill: #a1a1aa;
       }
       .section-index {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 10.5px;
-        font-weight: 600;
+        font-size: 11.5px;
+        font-weight: 700;
         fill: #10b981;
         letter-spacing: 0.8px;
       }
       .section-title {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 10.5px;
+        font-size: 11.5px;
         font-weight: 600;
-        fill: #71717a;
+        fill: #8b949e;
         letter-spacing: 0.9px;
       }
       .body-copy {
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 400;
-        fill: #d4d4d8;
+        fill: #e4e4e7;
       }
       .item-title {
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
-        font-size: 12.5px;
+        font-size: 13.5px;
         font-weight: 600;
         fill: #f4f4f5;
       }
       .item-sub {
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
-        font-size: 11.5px;
+        font-size: 12px;
         font-weight: 400;
         fill: #a1a1aa;
       }
       .lang-name {
         font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 500;
         fill: #e4e4e7;
       }
       .lang-pct {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 11px;
-        font-weight: 500;
+        font-size: 12px;
+        font-weight: 600;
         fill: #a1a1aa;
       }
       .mono-meta {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 11px;
+        font-size: 11.5px;
         font-weight: 400;
         fill: #a1a1aa;
       }
       .mono-muted {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 10.5px;
+        font-size: 11px;
         font-weight: 400;
         fill: #71717a;
       }
       .chip-text {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 9.5px;
+        font-size: 10.5px;
         font-weight: 500;
         fill: #d4d4d8;
       }
       .node-label {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 9.5px;
-        font-weight: 500;
+        font-size: 10px;
+        font-weight: 600;
         fill: #a1a1aa;
       }
       .stat-val {
         font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-        font-size: 15px;
-        font-weight: 600;
+        font-size: 16px;
+        font-weight: 700;
         fill: #f4f4f5;
       }
       @keyframes pulseGlow {
@@ -149,14 +149,14 @@ export function renderTelemetrySvg(metrics: SystemMetrics, options: RenderOption
 
     <!-- Ambient Emerald Spotlight -->
     <radialGradient id="emerald-spotlight" cx="82%" cy="8%" r="55%">
-      <stop offset="0%" stop-color="#10b981" stop-opacity="0.11" />
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.12" />
       <stop offset="50%" stop-color="#10b981" stop-opacity="0.03" />
       <stop offset="100%" stop-color="#0a0a0a" stop-opacity="0" />
     </radialGradient>
 
     <!-- Sparkline Area Gradient -->
     <linearGradient id="spark-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#10b981" stop-opacity="0.28" />
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.3" />
       <stop offset="100%" stop-color="#10b981" stop-opacity="0.0" />
     </linearGradient>
 
@@ -184,187 +184,185 @@ export function renderTelemetrySvg(metrics: SystemMetrics, options: RenderOption
   <!-- ================================================================= -->
   <!-- HEADER                                                            -->
   <!-- ================================================================= -->
-  <g transform="translate(36, 38)">
-    <!-- Subtle Geometric Emblem -->
-    <g transform="translate(0, -16)">
-      <rect x="0" y="0" width="34" height="34" rx="8" fill="#111114" stroke="#27272a" stroke-width="1" />
-      <path d="M10 17 L17 10 L24 17 L17 24 Z" stroke="#10b981" stroke-width="1.5" fill="#10b981" fill-opacity="0.12" />
-      <circle cx="17" cy="17" r="2" fill="#34d399" class="soft-pulse" />
+  <g transform="translate(38, 42)">
+    <!-- Geometric Emblem -->
+    <g transform="translate(0, -18)">
+      <rect x="0" y="0" width="38" height="38" rx="8" fill="#111114" stroke="#27272a" stroke-width="1" />
+      <path d="M11 19 L19 11 L27 19 L19 27 Z" stroke="#10b981" stroke-width="1.6" fill="#10b981" fill-opacity="0.12" />
+      <circle cx="19" cy="19" r="2.2" fill="#34d399" class="soft-pulse" />
     </g>
 
-    <text x="48" y="0" class="name">${escapeXml(metrics.name)}</text>
-    <text x="48" y="21" class="role">${escapeXml(metrics.role)}</text>
+    <text x="52" y="2" class="name">${escapeXml(metrics.name)}</text>
+    <text x="52" y="25" class="role">${escapeXml(metrics.role)}</text>
   </g>
 
   <!-- Right Header Badge (Location & Domain with Live Pulse) -->
-  <g transform="translate(${width - 260}, 26)">
-    <rect x="0" y="0" width="224" height="30" rx="15" fill="#111115" stroke="#27272a" stroke-width="1" />
-    <circle cx="18" cy="15" r="6" fill="#10b981" fill-opacity="0.2">
-      <animate attributeName="r" values="4;7;4" dur="3s" repeatCount="indefinite" />
+  <g transform="translate(${width - 280}, 28)">
+    <rect x="0" y="0" width="242" height="32" rx="16" fill="#111115" stroke="#27272a" stroke-width="1" />
+    <circle cx="20" cy="16" r="6.5" fill="#10b981" fill-opacity="0.2">
+      <animate attributeName="r" values="4.5;7.5;4.5" dur="3s" repeatCount="indefinite" />
       <animate attributeName="fill-opacity" values="0.35;0.08;0.35" dur="3s" repeatCount="indefinite" />
     </circle>
-    <circle cx="18" cy="15" r="3" fill="#10b981" />
-    <text x="32" y="19" class="mono-meta">${escapeXml(metrics.location)} · ${escapeXml(metrics.website)}</text>
+    <circle cx="20" cy="16" r="3.2" fill="#10b981" />
+    <text x="36" y="20" class="mono-meta">${escapeXml(metrics.location)} · ${escapeXml(metrics.website)}</text>
   </g>
 
-  <!-- Horizontal Structural Divider with Subtle Animated Shimmer Beam -->
-  <line x1="36" y1="84" x2="${width - 36}" y2="84" stroke="#1f1f23" stroke-width="1" />
-  <rect x="36" y="83.5" width="140" height="1.5" fill="url(#beam-grad)">
-    <animate attributeName="x" values="36;${width - 176};36" dur="9s" repeatCount="indefinite" />
+  <!-- Horizontal Structural Divider with Animated Beam -->
+  <line x1="38" y1="92" x2="${width - 38}" y2="92" stroke="#1f1f23" stroke-width="1" />
+  <rect x="38" y="91.5" width="160" height="1.5" fill="url(#beam-grad)">
+    <animate attributeName="x" values="38;${width - 198};38" dur="8.5s" repeatCount="indefinite" />
   </rect>
 
   <!-- ================================================================= -->
-  <!-- COLUMN 1: 01 / FOCUS & ARCHITECTURE TOPOLOGY (x: 36, width: 244)  -->
+  <!-- COLUMN 1: 01 / FOCUS & ARCHITECTURE TOPOLOGY                      -->
   <!-- ================================================================= -->
-  <g transform="translate(36, 110)">
+  <g transform="translate(38, 118)">
     <text x="0" y="0" class="section-index">01</text>
-    <text x="22" y="0" class="section-title">FOCUS &amp; APPROACH</text>
+    <text x="24" y="0" class="section-title">FOCUS &amp; APPROACH</text>
 
-    <text x="0" y="26" class="body-copy">${escapeXml(metrics.summaryLines[0])}</text>
-    <text x="0" y="45" class="body-copy">${escapeXml(metrics.summaryLines[1])}</text>
-    <text x="0" y="64" class="body-copy">${escapeXml(metrics.summaryLines[2])}</text>
+    <text x="0" y="28" class="body-copy">${escapeXml(metrics.summaryLines[0])}</text>
+    <text x="0" y="49" class="body-copy">${escapeXml(metrics.summaryLines[1])}</text>
+    <text x="0" y="70" class="body-copy">${escapeXml(metrics.summaryLines[2])}</text>
 
-    <!-- Visual Interactive Topology Card -->
-    <g transform="translate(0, 82)">
-      <rect x="0" y="0" width="244" height="92" rx="8" fill="#0f0f13" stroke="#1f1f23" stroke-width="1" />
-      <text x="14" y="18" class="mono-muted">ARCHITECTURE FLOW</text>
-      <circle cx="226" cy="14" r="2.5" fill="#10b981" class="soft-pulse" />
+    <!-- Architecture Flow Card -->
+    <g transform="translate(0, 90)">
+      <rect x="0" y="0" width="252" height="96" rx="8" fill="#0f0f13" stroke="#1f1f23" stroke-width="1" />
+      <text x="16" y="20" class="mono-muted">ARCHITECTURE FLOW</text>
+      <circle cx="234" cy="16" r="2.5" fill="#10b981" class="soft-pulse" />
 
-      <!-- Animated Flow Lines -->
-      <line x1="56" y1="48" x2="102" y2="48" stroke="#27272a" stroke-width="1.5" />
-      <line x1="56" y1="48" x2="102" y2="48" stroke="#10b981" stroke-width="1.5" class="animated-link" />
+      <!-- Flow Lines -->
+      <line x1="60" y1="50" x2="104" y2="50" stroke="#27272a" stroke-width="1.5" />
+      <line x1="60" y1="50" x2="104" y2="50" stroke="#10b981" stroke-width="1.5" class="animated-link" />
 
-      <line x1="142" y1="48" x2="188" y2="48" stroke="#27272a" stroke-width="1.5" />
-      <line x1="142" y1="48" x2="188" y2="48" stroke="#10b981" stroke-width="1.5" class="animated-link" />
+      <line x1="148" y1="50" x2="192" y2="50" stroke="#27272a" stroke-width="1.5" />
+      <line x1="148" y1="50" x2="192" y2="50" stroke="#10b981" stroke-width="1.5" class="animated-link" />
 
       <!-- Node 1: ODD -->
-      <rect x="20" y="34" width="36" height="28" rx="6" fill="#16161c" stroke="#27272a" stroke-width="1" />
-      <path d="M33 44 L29 48 L33 52 M43 44 L47 48 L43 52" stroke="#a1a1aa" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-      <text x="38" y="76" text-anchor="middle" class="node-label">ODD</text>
+      <rect x="20" y="35" width="40" height="30" rx="6" fill="#16161c" stroke="#27272a" stroke-width="1" />
+      <path d="M34 45 L30 50 L34 55 M46 45 L50 50 L46 55" stroke="#a1a1aa" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+      <text x="40" y="80" text-anchor="middle" class="node-label">ODD</text>
 
       <!-- Node 2: Agents (Center Highlighted) -->
-      <rect x="102" y="32" width="40" height="32" rx="7" fill="#111f1a" stroke="#10b981" stroke-opacity="0.55" stroke-width="1" />
-      <circle cx="122" cy="48" r="5" stroke="#34d399" stroke-width="1.4" fill="none" />
-      <circle cx="122" cy="48" r="1.8" fill="#10b981" />
-      <text x="122" y="76" text-anchor="middle" class="node-label" fill="#d4d4d8">Agents</text>
+      <rect x="104" y="33" width="44" height="34" rx="7" fill="#111f1a" stroke="#10b981" stroke-opacity="0.6" stroke-width="1" />
+      <circle cx="126" cy="50" r="5.5" stroke="#34d399" stroke-width="1.4" fill="none" />
+      <circle cx="126" cy="50" r="2" fill="#10b981" />
+      <text x="126" y="80" text-anchor="middle" class="node-label" fill="#d4d4d8">Agents</text>
 
       <!-- Node 3: Systems Core -->
-      <rect x="188" y="34" width="36" height="28" rx="6" fill="#16161c" stroke="#27272a" stroke-width="1" />
-      <rect x="199" y="42" width="14" height="5" rx="1" stroke="#a1a1aa" stroke-width="1.2" />
-      <rect x="199" y="49" width="14" height="5" rx="1" stroke="#a1a1aa" stroke-width="1.2" />
-      <text x="206" y="76" text-anchor="middle" class="node-label">Systems</text>
+      <rect x="192" y="35" width="40" height="30" rx="6" fill="#16161c" stroke="#27272a" stroke-width="1" />
+      <rect x="204" y="44" width="16" height="5" rx="1" stroke="#a1a1aa" stroke-width="1.2" />
+      <rect x="204" y="52" width="16" height="5" rx="1" stroke="#a1a1aa" stroke-width="1.2" />
+      <text x="212" y="80" text-anchor="middle" class="node-label">Systems</text>
     </g>
 
     <!-- Tech Stack Pills Row -->
-    <g transform="translate(0, 186)">
+    <g transform="translate(0, 198)">
       ${techChips
         .map((chip, i) => {
-          const xPositions = [0, 52, 122, 168, 210];
-          const widths = [48, 66, 42, 38, 34];
+          const xPositions = [0, 54, 126, 174, 218];
+          const widths = [50, 68, 44, 40, 34];
           return `
-      <rect x="${xPositions[i]}" y="0" width="${widths[i]}" height="22" rx="5" fill="#121216" stroke="#232329" stroke-width="1" />
-      <text x="${xPositions[i] + widths[i] / 2}" y="14.5" text-anchor="middle" class="chip-text">${chip}</text>`;
+      <rect x="${xPositions[i]}" y="0" width="${widths[i]}" height="24" rx="5" fill="#121216" stroke="#232329" stroke-width="1" />
+      <text x="${xPositions[i] + widths[i] / 2}" y="15.5" text-anchor="middle" class="chip-text">${chip}</text>`;
         })
         .join("")}
     </g>
   </g>
 
-  <!-- Vertical Structural Divider 1 -->
-  <line x1="300" y1="102" x2="300" y2="326" stroke="#1f1f23" stroke-width="1" />
+  <!-- Vertical Divider 1 -->
+  <line x1="312" y1="110" x2="312" y2="344" stroke="#1f1f23" stroke-width="1" />
 
   <!-- ================================================================= -->
-  <!-- COLUMN 2: 02 / PRIMARY STACK & CADENCE WAVE (x: 322, width: 236)  -->
+  <!-- COLUMN 2: 02 / PRIMARY STACK & CADENCE WAVE                       -->
   <!-- ================================================================= -->
-  <g transform="translate(322, 110)">
+  <g transform="translate(334, 118)">
     <text x="0" y="0" class="section-index">02</text>
-    <text x="22" y="0" class="section-title">PRIMARY STACK</text>
+    <text x="24" y="0" class="section-title">PRIMARY STACK</text>
 
     ${metrics.languages
       .map((lang, idx) => {
-        const yOffset = 24 + idx * 34;
-        const fillWidth = Math.max(8, Math.round((lang.percentage / 100) * langBarMaxWidth));
+        const yOffset = 26 + idx * 36;
+        const fillWidth = Math.max(10, Math.round((lang.percentage / 100) * langBarMaxWidth));
         const isPrimary = idx === 0;
         const fillStyle = isPrimary ? "url(#bar-emerald)" : escapeXml(lang.color);
         return `
     <g transform="translate(0, ${yOffset})">
       <text x="0" y="0" class="lang-name">${escapeXml(lang.name)}</text>
       <text x="${langBarMaxWidth}" y="0" text-anchor="end" class="lang-pct">${lang.percentage}%</text>
-      <rect x="0" y="7" width="${langBarMaxWidth}" height="4.5" rx="2.25" fill="#18181c" />
-      <rect x="0" y="7" width="${fillWidth}" height="4.5" rx="2.25" fill="${fillStyle}" />
+      <rect x="0" y="8" width="${langBarMaxWidth}" height="5" rx="2.5" fill="#18181c" />
+      <rect x="0" y="8" width="${fillWidth}" height="5" rx="2.5" fill="${fillStyle}" />
     </g>`;
       })
       .join("")}
 
-    <!-- Activity Sparkline Graph Card -->
-    <g transform="translate(0, 158)">
-      <rect x="0" y="0" width="${langBarMaxWidth}" height="50" rx="8" fill="#0f0f13" stroke="#1f1f23" stroke-width="1" />
-      <text x="12" y="18" class="mono-muted">DEVELOPMENT CADENCE</text>
-      <text x="${langBarMaxWidth - 12}" y="18" text-anchor="end" class="mono-meta" fill="#10b981">Active</text>
+    <!-- Activity Sparkline Card -->
+    <g transform="translate(0, 168)">
+      <rect x="0" y="0" width="${langBarMaxWidth}" height="54" rx="8" fill="#0f0f13" stroke="#1f1f23" stroke-width="1" />
+      <text x="14" y="19" class="mono-muted">DEVELOPMENT CADENCE</text>
+      <text x="${langBarMaxWidth - 14}" y="19" text-anchor="end" class="mono-meta" fill="#10b981">Active</text>
 
       <!-- Smooth Sparkline Curve -->
-      <path d="M 12 40 Q 38 38, 56 32 T 98 34 T 142 26 T 186 29 T 224 22 L 224 44 L 12 44 Z" fill="url(#spark-grad)" />
-      <path d="M 12 40 Q 38 38, 56 32 T 98 34 T 142 26 T 186 29 T 224 22" stroke="#10b981" stroke-width="1.5" fill="none" stroke-linecap="round" />
-      <circle cx="224" cy="22" r="2.5" fill="#34d399">
-        <animate attributeName="r" values="2;3.8;2" dur="2.4s" repeatCount="indefinite" />
+      <path d="M 14 43 Q 42 41, 62 34 T 106 36 T 152 28 T 198 31 T 234 23 L 234 47 L 14 47 Z" fill="url(#spark-grad)" />
+      <path d="M 14 43 Q 42 41, 62 34 T 106 36 T 152 28 T 198 31 T 234 23" stroke="#10b981" stroke-width="1.6" fill="none" stroke-linecap="round" />
+      <circle cx="234" cy="23" r="2.8" fill="#34d399">
+        <animate attributeName="r" values="2;4;2" dur="2.4s" repeatCount="indefinite" />
       </circle>
     </g>
   </g>
 
-  <!-- Vertical Structural Divider 2 -->
-  <line x1="580" y1="102" x2="580" y2="326" stroke="#1f1f23" stroke-width="1" />
+  <!-- Vertical Divider 2 -->
+  <line x1="604" y1="110" x2="604" y2="344" stroke="#1f1f23" stroke-width="1" />
 
   <!-- ================================================================= -->
-  <!-- COLUMN 3: 03 / CURRENTLY BUILDING (x: 602, width: 222)            -->
+  <!-- COLUMN 3: 03 / CURRENTLY BUILDING                                 -->
   <!-- ================================================================= -->
-  <g transform="translate(602, 110)">
+  <g transform="translate(626, 118)">
     <text x="0" y="0" class="section-index">03</text>
-    <text x="22" y="0" class="section-title">CURRENTLY BUILDING</text>
+    <text x="24" y="0" class="section-title">CURRENTLY BUILDING</text>
 
-    <!-- Work Item 1 with Vector Icon -->
-    <g transform="translate(0, 16)">
-      <rect x="0" y="0" width="222" height="64" rx="8" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <rect x="12" y="14" width="28" height="28" rx="6" fill="#141d19" stroke="#10b981" stroke-opacity="0.35" stroke-width="1" />
-      <!-- Node Network Icon -->
-      <circle cx="26" cy="23" r="2" fill="#34d399" />
-      <circle cx="21" cy="32" r="2" fill="#10b981" />
-      <circle cx="31" cy="32" r="2" fill="#10b981" />
-      <path d="M26 25 L21 30 M26 25 L31 30 M21 32 L31 32" stroke="#10b981" stroke-width="1.2" />
+    <!-- Work Item 1 -->
+    <g transform="translate(0, 18)">
+      <rect x="0" y="0" width="226" height="66" rx="8" fill="#111115" stroke="#1f1f23" stroke-width="1" />
+      <rect x="14" y="15" width="30" height="30" rx="6" fill="#141d19" stroke="#10b981" stroke-opacity="0.35" stroke-width="1" />
+      <circle cx="29" cy="24" r="2.2" fill="#34d399" />
+      <circle cx="23" cy="34" r="2.2" fill="#10b981" />
+      <circle cx="35" cy="34" r="2.2" fill="#10b981" />
+      <path d="M29 26 L23 32 M29 26 L35 32 M23 34 L35 34" stroke="#10b981" stroke-width="1.3" />
 
-      <text x="50" y="26" class="item-title">${escapeXml(metrics.currentWork[0]?.title || "")}</text>
-      <text x="50" y="44" class="item-sub">${escapeXml(metrics.currentWork[0]?.subtitle || "")}</text>
+      <text x="54" y="28" class="item-title">${escapeXml(metrics.currentWork[0]?.title || "")}</text>
+      <text x="54" y="47" class="item-sub">${escapeXml(metrics.currentWork[0]?.subtitle || "")}</text>
     </g>
 
-    <!-- Work Item 2 with Vector Icon -->
-    <g transform="translate(0, 90)">
-      <rect x="0" y="0" width="222" height="64" rx="8" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <rect x="12" y="14" width="28" height="28" rx="6" fill="#16161c" stroke="#27272a" stroke-width="1" />
-      <!-- Layered Stack Icon -->
-      <path d="M20 24 L26 21 L32 24 L26 27 Z" stroke="#a1a1aa" stroke-width="1.2" fill="none" />
-      <path d="M20 28.5 L26 31.5 L32 28.5" stroke="#10b981" stroke-width="1.2" fill="none" stroke-linecap="round" />
-      <path d="M20 32.5 L26 35.5 L32 32.5" stroke="#71717a" stroke-width="1.2" fill="none" stroke-linecap="round" />
+    <!-- Work Item 2 -->
+    <g transform="translate(0, 96)">
+      <rect x="0" y="0" width="226" height="66" rx="8" fill="#111115" stroke="#1f1f23" stroke-width="1" />
+      <rect x="14" y="15" width="30" height="30" rx="6" fill="#16161c" stroke="#27272a" stroke-width="1" />
+      <path d="M22 25 L29 22 L36 25 L29 28 Z" stroke="#a1a1aa" stroke-width="1.3" fill="none" />
+      <path d="M22 30 L29 33 L36 30" stroke="#10b981" stroke-width="1.3" fill="none" stroke-linecap="round" />
+      <path d="M22 34.5 L29 37.5 L36 34.5" stroke="#71717a" stroke-width="1.3" fill="none" stroke-linecap="round" />
 
-      <text x="50" y="26" class="item-title">${escapeXml(metrics.currentWork[1]?.title || "")}</text>
-      <text x="50" y="44" class="item-sub">${escapeXml(metrics.currentWork[1]?.subtitle || "")}</text>
+      <text x="54" y="28" class="item-title">${escapeXml(metrics.currentWork[1]?.title || "")}</text>
+      <text x="54" y="47" class="item-sub">${escapeXml(metrics.currentWork[1]?.subtitle || "")}</text>
     </g>
 
     <!-- Compact Activity Row -->
-    <g transform="translate(0, 166)">
-      <rect x="0" y="0" width="106" height="42" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <text x="14" y="26" class="stat-val">${metrics.totalRepos} <tspan class="mono-muted" dx="4">Repos</tspan></text>
+    <g transform="translate(0, 174)">
+      <rect x="0" y="0" width="108" height="46" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
+      <text x="14" y="29" class="stat-val">${metrics.totalRepos} <tspan class="mono-muted" dx="4">Repos</tspan></text>
 
-      <rect x="116" y="0" width="106" height="42" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <text x="130" y="26" class="stat-val">${metrics.totalContributions}+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
+      <rect x="118" y="0" width="108" height="46" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
+      <text x="132" y="29" class="stat-val">${metrics.totalContributions}+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
     </g>
   </g>
 
-  <!-- Bottom Structural Divider -->
-  <line x1="36" y1="348" x2="${width - 36}" y2="348" stroke="#1f1f23" stroke-width="1" />
+  <!-- Bottom Divider -->
+  <line x1="38" y1="366" x2="${width - 38}" y2="366" stroke="#1f1f23" stroke-width="1" />
 
   <!-- Footer Metadata -->
-  <g transform="translate(36, 378)">
+  <g transform="translate(38, 396)">
     <circle cx="5" cy="-4" r="2.5" fill="#10b981" />
     <text x="16" y="0" class="mono-meta">Portfolio <tspan fill="#f4f4f5">${escapeXml(metrics.website)}</tspan>   ·   NFC Card <tspan fill="#f4f4f5">${escapeXml(metrics.cardUrl)}</tspan></text>
-    <text x="${width - 72}" y="0" text-anchor="end" class="mono-muted">ES · EN · VAL   —   Updated automatically via GitHub Actions</text>
+    <text x="${width - 76}" y="0" text-anchor="end" class="mono-muted">ES · EN · VAL   —   Updated automatically via GitHub Actions</text>
   </g>
 </svg>`;
 }

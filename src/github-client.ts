@@ -128,8 +128,8 @@ export async function fetchSystemMetrics(
 
     return {
       ...DEFAULT_METRICS,
-      totalRepos: Math.max(totalRepos, DEFAULT_METRICS.totalRepos),
-      totalContributions: Math.max(totalContributions, DEFAULT_METRICS.totalContributions),
+      totalRepos: totalRepos > 0 ? totalRepos : DEFAULT_METRICS.totalRepos,
+      totalContributions: totalContributions > 0 ? totalContributions : DEFAULT_METRICS.totalContributions,
       languages: calculatedLanguages
     };
   } catch (error) {
