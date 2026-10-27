@@ -256,24 +256,24 @@
     
     <g transform="translate(0, 26)">
       <text x="0" y="0" class="lang-name">TypeScript</text>
-      <text x="248" y="0" text-anchor="end" class="lang-pct">49%</text>
+      <text x="248" y="0" text-anchor="end" class="lang-pct">68%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
-      <rect x="0" y="8" width="122" height="5" rx="2.5" fill="url(#bar-emerald)" />
+      <rect x="0" y="8" width="169" height="5" rx="2.5" fill="url(#bar-emerald)" />
     </g>
     <g transform="translate(0, 62)">
-      <text x="0" y="0" class="lang-name">HTML</text>
-      <text x="248" y="0" text-anchor="end" class="lang-pct">24%</text>
+      <text x="0" y="0" class="lang-name">Python</text>
+      <text x="248" y="0" text-anchor="end" class="lang-pct">25%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
-      <rect x="0" y="8" width="60" height="5" rx="2.5" fill="#34d399" />
+      <rect x="0" y="8" width="62" height="5" rx="2.5" fill="#34d399" />
     </g>
     <g transform="translate(0, 98)">
-      <text x="0" y="0" class="lang-name">JavaScript</text>
-      <text x="248" y="0" text-anchor="end" class="lang-pct">21%</text>
+      <text x="0" y="0" class="lang-name">Shell</text>
+      <text x="248" y="0" text-anchor="end" class="lang-pct">6%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
-      <rect x="0" y="8" width="52" height="5" rx="2.5" fill="#6ee7b7" />
+      <rect x="0" y="8" width="15" height="5" rx="2.5" fill="#6ee7b7" />
     </g>
     <g transform="translate(0, 134)">
-      <text x="0" y="0" class="lang-name">Python</text>
+      <text x="0" y="0" class="lang-name">Dockerfile</text>
       <text x="248" y="0" text-anchor="end" class="lang-pct">2%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
       <rect x="0" y="8" width="10" height="5" rx="2.5" fill="#52525b" />
@@ -332,10 +332,10 @@
     <!-- Compact Activity Row -->
     <g transform="translate(0, 174)">
       <rect x="0" y="0" width="108" height="46" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <text x="14" y="29" class="stat-val">10 <tspan class="mono-muted" dx="4">Repos</tspan></text>
+      <text x="14" y="29" class="stat-val">3 <tspan class="mono-muted" dx="4">Repos</tspan></text>
 
       <rect x="118" y="0" width="108" height="46" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <text x="132" y="29" class="stat-val">53+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
+      <text x="132" y="29" class="stat-val">6+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
     </g>
   </g>
 
