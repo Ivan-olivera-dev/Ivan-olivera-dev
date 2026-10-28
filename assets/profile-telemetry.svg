@@ -335,7 +335,7 @@
       <text x="14" y="29" class="stat-val">3 <tspan class="mono-muted" dx="4">Repos</tspan></text>
 
       <rect x="118" y="0" width="108" height="46" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <text x="132" y="29" class="stat-val">6+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
+      <text x="132" y="29" class="stat-val">7+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
     </g>
   </g>
 
