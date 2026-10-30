@@ -256,25 +256,25 @@
     
     <g transform="translate(0, 26)">
       <text x="0" y="0" class="lang-name">TypeScript</text>
-      <text x="248" y="0" text-anchor="end" class="lang-pct">92%</text>
+      <text x="248" y="0" text-anchor="end" class="lang-pct">77%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
-      <rect x="0" y="8" width="228" height="5" rx="2.5" fill="url(#bar-emerald)" />
+      <rect x="0" y="8" width="191" height="5" rx="2.5" fill="url(#bar-emerald)" />
     </g>
     <g transform="translate(0, 62)">
-      <text x="0" y="0" class="lang-name">Python</text>
-      <text x="248" y="0" text-anchor="end" class="lang-pct">4%</text>
+      <text x="0" y="0" class="lang-name">JavaScript</text>
+      <text x="248" y="0" text-anchor="end" class="lang-pct">11%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
-      <rect x="0" y="8" width="10" height="5" rx="2.5" fill="#34d399" />
+      <rect x="0" y="8" width="27" height="5" rx="2.5" fill="#34d399" />
     </g>
     <g transform="translate(0, 98)">
-      <text x="0" y="0" class="lang-name">HTML</text>
-      <text x="248" y="0" text-anchor="end" class="lang-pct">1%</text>
+      <text x="0" y="0" class="lang-name">Python</text>
+      <text x="248" y="0" text-anchor="end" class="lang-pct">6%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
-      <rect x="0" y="8" width="10" height="5" rx="2.5" fill="#6ee7b7" />
+      <rect x="0" y="8" width="15" height="5" rx="2.5" fill="#6ee7b7" />
     </g>
     <g transform="translate(0, 134)">
-      <text x="0" y="0" class="lang-name">JavaScript</text>
-      <text x="248" y="0" text-anchor="end" class="lang-pct">1%</text>
+      <text x="0" y="0" class="lang-name">CSS</text>
+      <text x="248" y="0" text-anchor="end" class="lang-pct">4%</text>
       <rect x="0" y="8" width="248" height="5" rx="2.5" fill="#18181c" />
       <rect x="0" y="8" width="10" height="5" rx="2.5" fill="#52525b" />
     </g>
@@ -332,10 +332,10 @@
     <!-- Compact Activity Row -->
     <g transform="translate(0, 174)">
       <rect x="0" y="0" width="108" height="46" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <text x="14" y="29" class="stat-val">4 <tspan class="mono-muted" dx="4">Repos</tspan></text>
+      <text x="14" y="29" class="stat-val">5 <tspan class="mono-muted" dx="4">Repos</tspan></text>
 
       <rect x="118" y="0" width="108" height="46" rx="7" fill="#111115" stroke="#1f1f23" stroke-width="1" />
-      <text x="132" y="29" class="stat-val">10+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
+      <text x="132" y="29" class="stat-val">44+ <tspan class="mono-muted" dx="2">Commits</tspan></text>
     </g>
   </g>
 
