@@ -55,7 +55,7 @@ test("fetchCommitTimestamps without a token returns [] without calling the API",
   assert.equal(fetchMock.mock.callCount(), 0);
 });
 
-type Body = { query: string; variables: Record<string, any> };
+type Body = { query: string; variables: Record<string, unknown> };
 type Repo = { name: string; commits: string[][] | null };
 
 /**

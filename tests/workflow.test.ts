@@ -50,11 +50,20 @@ test("the card push rebases before pushing", () => {
 });
 
 test("S5: the card push step also commits assets/habits.svg", () => {
-  const start = workflow.indexOf("- name: Commit and Push Updated Profile Card");
+  const start = workflow.indexOf("- name: Commit and Push Profile Card & Habits");
   const end = workflow.indexOf("- name:", start + 1);
   assert.ok(start >= 0 && end > start);
   const step = workflow.slice(start, end);
   assert.ok(step.includes("git status --porcelain assets/profile-card.svg assets/habits.svg"), "checks both assets");
   assert.ok(step.includes("git add assets/profile-card.svg assets/habits.svg"), "stages both assets");
   assert.ok(step.indexOf("git add") < step.indexOf("git commit"));
+});
+
+test("S6: the card push commit message names both generated assets", () => {
+  const start = workflow.indexOf("- name: Commit and Push Profile Card & Habits");
+  const end = workflow.indexOf("- name:", start + 1);
+  assert.ok(start >= 0 && end > start, "step is named after both assets");
+  const step = workflow.slice(start, end);
+  assert.ok(step.includes('git commit -m "chore(profile): refresh card and habits [skip ci]"'));
+  assert.ok(!workflow.includes("chore(card): refresh profile card"));
 });

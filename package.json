@@ -1,19 +1,22 @@
 {
   "name": "ivan-olivera-dev-github-dashboard",
   "version": "1.0.0",
-  "description": "Bespoke GitHub Profile Dashboard and SVG Metrics Generator for @Ivan-olivera-dev",
+  "description": "Tokyo Night fastfetch-style GitHub profile card with an ASCII portrait, an ASCII coding-habits panel and lowlighter/metrics for @Ivan-olivera-dev",
   "type": "module",
   "scripts": {
     "generate": "node --experimental-strip-types src/index.ts",
     "portrait": "node --experimental-strip-types scripts/build-portrait.ts",
-    "test": "node --experimental-strip-types --test tests/**/*.test.ts"
+    "test": "node --experimental-strip-types --test tests/**/*.test.ts",
+    "typecheck": "npx -y -p typescript@5 -p @types/node@22 sh -c 'tsc --noEmit -p . --typeRoots \"$(dirname \"$(dirname \"$(command -v tsc)\")\")/@types\"'"
   },
   "keywords": [
     "github-profile",
-    "dashboard",
-    "metrics",
+    "profile-readme",
+    "ascii-art",
+    "fastfetch",
+    "tokyo-night",
     "svg-generator",
-    "systems-architecture"
+    "lowlighter-metrics"
   ],
   "author": "Iván Olivera González <ivanoliveradev@gmail.com>",
   "license": "MIT"

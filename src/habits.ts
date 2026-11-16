@@ -45,6 +45,22 @@ interface PageInfo {
   endCursor: string | null;
 }
 
+/** Only the fields REPOS_QUERY / HISTORY_QUERY select; optional because the API response is untrusted. */
+interface ReposData {
+  user?: {
+    id?: string;
+    repositories?: { nodes?: Array<{ name?: string; defaultBranchRef?: unknown } | null>; pageInfo?: PageInfo };
+  } | null;
+}
+
+interface HistoryData {
+  repository?: {
+    defaultBranchRef?: {
+      target?: { history?: { nodes?: Array<{ committedDate?: string } | null>; pageInfo?: PageInfo } };
+    } | null;
+  } | null;
+}
+
 /**
  * Commit timestamps authored by `username` on the default branch of their public repositories,
  * paginating every repository page and every history page.
@@ -61,7 +77,7 @@ export async function fetchCommitTimestamps(
   if (!token) return [];
 
   let requests = 0;
-  const graphql = async (query: string, variables: Record<string, unknown>): Promise<any> => {
+  const graphql = async <T>(query: string, variables: Record<string, unknown>): Promise<T> => {
     if (requests >= MAX_REQUESTS) throw new RequestLimitReached();
     requests++;
     const res = await fetch("https://api.github.com/graphql", {
@@ -74,7 +90,7 @@ export async function fetchCommitTimestamps(
       body: JSON.stringify({ query, variables })
     });
     if (!res.ok) throw new HabitsUnavailable(`GitHub API returned ${res.status}; commit habits are unavailable.`);
-    const data = ((await res.json()) as any)?.data;
+    const data = ((await res.json()) as { data?: T | null })?.data;
     if (!data) throw new HabitsUnavailable("GitHub API returned no data; commit habits are unavailable.");
     return data;
   };
@@ -83,7 +99,7 @@ export async function fetchCommitTimestamps(
   try {
     let repoCursor: string | null = null;
     do {
-      const user = (await graphql(REPOS_QUERY, { login: username, cursor: repoCursor }))?.user;
+      const user = (await graphql<ReposData>(REPOS_QUERY, { login: username, cursor: repoCursor }))?.user;
       const repos = user?.repositories;
       if (!user?.id || !Array.isArray(repos?.nodes)) {
         throw new HabitsUnavailable("GitHub API returned no repositories; commit habits are unavailable.");
@@ -94,7 +110,7 @@ export async function fetchCommitTimestamps(
         let historyCursor: string | null = null;
         do {
           const variables = { owner: username, name: repo.name, since, userId: user.id, cursor: historyCursor };
-          const history = (await graphql(HISTORY_QUERY, variables))?.repository?.defaultBranchRef?.target?.history;
+          const history = (await graphql<HistoryData>(HISTORY_QUERY, variables))?.repository?.defaultBranchRef?.target?.history;
           if (!Array.isArray(history?.nodes)) {
             throw new HabitsUnavailable(`GitHub API returned no history for ${repo.name}; commit habits are unavailable.`);
           }

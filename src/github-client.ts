@@ -24,6 +24,22 @@ const QUERY = `
   }
 `;
 
+/** Only the fields QUERY selects; every level is optional because the API response is untrusted. */
+interface RepoNode {
+  stargazerCount?: number;
+  languages?: { edges?: Array<{ size?: number; node: { name: string } }> };
+}
+
+interface ProfileResponse {
+  data?: {
+    user?: {
+      followers?: { totalCount?: number };
+      repositories?: { totalCount?: number; nodes?: RepoNode[] };
+      contributionsCollection?: { contributionCalendar?: { totalContributions?: number } };
+    } | null;
+  };
+}
+
 function offline(): ProfileData {
   return { ...PROFILE, stats: { ...UNAVAILABLE }, languages: [] };
 }
@@ -50,13 +66,13 @@ export async function fetchProfileData(
       return offline();
     }
 
-    const user = ((await res.json()) as any)?.data?.user;
+    const user = ((await res.json()) as ProfileResponse)?.data?.user;
     if (!user) {
       console.warn("GitHub API returned no user; rendering stats as unavailable.");
       return offline();
     }
 
-    const repos: any[] = user.repositories?.nodes ?? [];
+    const repos: RepoNode[] = user.repositories?.nodes ?? [];
     const langBytes = new Map<string, number>();
     let stars = 0;
 
