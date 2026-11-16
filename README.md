@@ -1,19 +1,18 @@
 <p align="center">
-  <img src="./assets/profile-telemetry.svg" alt="Iván Olivera González — Software Engineer" width="100%" />
+  <img src="./assets/profile-card.svg" alt="ASCII portrait of Iván Olivera González next to a fastfetch-style card: Software Engineer, Backend &amp; Systems, Valencia. Focus on agentic workflows and ODD, and backend and core services." width="100%" />
 </p>
 
-I work mainly on backend services in JavaScript/TypeScript and Python, though what drives me is software engineering as a whole: system design, Linux infrastructure, and building multi-agent development workflows using **Organic Driven Development (ODD)**.
+<p align="center">
+  <a href="https://ivanolivera.dev"><img src="https://img.shields.io/badge/web-ivanolivera.dev-7aa2f7?style=flat-square&labelColor=1a1b26" alt="Website: ivanolivera.dev" /></a>
+  <a href="https://card.ivanolivera.dev"><img src="https://img.shields.io/badge/card-card.ivanolivera.dev-bb9af7?style=flat-square&labelColor=1a1b26" alt="Digital card: card.ivanolivera.dev" /></a>
+  <a href="https://linkedin.com/in/ivan-olivera-gonzalez"><img src="https://img.shields.io/badge/linkedin-ivan--olivera--gonzalez-7dcfff?style=flat-square&labelColor=1a1b26" alt="LinkedIn: ivan-olivera-gonzalez" /></a>
+  <a href="mailto:ivanoliveradev@gmail.com"><img src="https://img.shields.io/badge/mail-ivanoliveradev%40gmail.com-9ece6a?style=flat-square&labelColor=1a1b26" alt="Email: ivanoliveradev@gmail.com" /></a>
+</p>
 
-### Current Focus & Active Work
+<p align="center">
+  <img src="./assets/metrics.svg" alt="GitHub metrics: isometric contribution calendar, most used languages, coding habits, achievements and recent activity." width="100%" />
+</p>
 
-| Project / Area | Description | Stack |
-| :--- | :--- | :--- |
-| **Agentic Workflows & ODD** | Multi-agent orchestration, verification pipelines, and ODD task-tracking tooling. | `TypeScript` · `Python` · `Node.js` |
-| **Backend & Core Services** | Event-driven APIs, containerized microservices, and infrastructure automation. | `Node.js` · `Docker` · `Linux` |
-
-### Links
-
-- **Portfolio** — [ivanolivera.dev](https://ivanolivera.dev)
-- **Digital Card** — [card.ivanolivera.dev](https://card.ivanolivera.dev)
-- **LinkedIn** — [linkedin.com/in/ivan-olivera-gonzalez](https://linkedin.com/in/ivan-olivera-gonzalez)
-- **Email** — [ivanoliveradev@gmail.com](mailto:ivanoliveradev@gmail.com)
+<p align="center">
+  <sub>The card is rendered from <a href="./src">src/</a> and the metrics by <a href="https://github.com/lowlighter/metrics">lowlighter/metrics</a>, refreshed daily by GitHub Actions.</sub>
+</p>
