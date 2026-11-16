@@ -1,4 +1,4 @@
-import { TOKYO_NIGHT } from "./card-renderer.ts";
+import { TOKYO_NIGHT, TEXT_STYLE, escapeXml, gradientColor, renderWindow } from "./theme.ts";
 import { PROFILE } from "./profile.ts";
 import type { Habits } from "./types.ts";
 
@@ -20,30 +20,6 @@ const CURSOR_Y = 300;
 const BLOCKS = ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const HOUR_LABELS = [0, 6, 12, 18, 23];
-const GRADIENT_STEPS = 5;
-
-function escapeXml(text: string): string {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
-
-function mixHex(from: string, to: string, t: number): string {
-  const channel = (hex: string, i: number) => parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
-  return `#${[0, 1, 2]
-    .map((i) => Math.round(channel(from, i) + (channel(to, i) - channel(from, i)) * t).toString(16).padStart(2, "0"))
-    .join("")}`;
-}
-
-/** Same theme gradient as the portrait: low intensity cyan, mid blue, busiest purple. */
-function intensityColor(intensity: number): string {
-  const step = Math.min(GRADIENT_STEPS - 1, Math.floor(intensity * GRADIENT_STEPS));
-  const t = step / (GRADIENT_STEPS - 1);
-  return t <= 0.5 ? mixHex(T.cyan, T.blue, t * 2) : mixHex(T.blue, T.purple, (t - 0.5) * 2);
-}
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -63,7 +39,7 @@ function renderHourChart(habits: Habits): string {
   habits.byHour.forEach((count, hour) => {
     const x = LEFT + hour * COLUMN_WIDTH;
     const height = count > 0 ? Math.max(1, Math.round((count / max) * levels)) : 0;
-    const color = intensityColor(count / max);
+    const color = gradientColor(count / max);
     const cells: string[] = [];
     for (let row = 0; row < CHART_ROWS; row++) {
       const fill = Math.min(BLOCKS.length, Math.max(0, height - (CHART_ROWS - 1 - row) * BLOCKS.length));
@@ -93,7 +69,7 @@ function renderWeekdays(habits: Habits): string {
     const y = CHART_TOP + day * WEEK_LINE;
     parts.push(
       `<text class="info" x="${WEEK_X}" y="${y}" xml:space="preserve"><tspan class="key">${WEEKDAYS[day]}</tspan> ` +
-        `<tspan fill="${intensityColor(count / max)}">${"█".repeat(filled)}</tspan>` +
+        `<tspan fill="${gradientColor(count / max)}">${"█".repeat(filled)}</tspan>` +
         `<tspan class="track">${"░".repeat(WEEK_BAR - filled)}</tspan> <tspan>${count}</tspan></text>`
     );
   });
@@ -113,7 +89,6 @@ function renderFacts(habits: Habits): string {
 }
 
 export function renderHabitsPanel(habits: Habits): string {
-  const mono = `ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace`;
   const handle = PROFILE.handle;
   const body =
     habits.total > 0
@@ -123,7 +98,7 @@ export function renderHabitsPanel(habits: Habits): string {
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}" width="${WIDTH}" height="${HEIGHT}" role="img" aria-label="${escapeXml(`Commit habits of ${handle} by hour and weekday`)}">
   <style>
-    text { font-family: ${mono}; white-space: pre; font-variant-ligatures: none; font-feature-settings: "liga" 0, "calt" 0; }
+    ${TEXT_STYLE}
     .info { font-size: 13px; fill: ${T.fg}; }
     .bar { font-size: 13px; }
     .head { font-size: 13px; fill: ${T.cyan}; font-weight: 700; }
@@ -137,19 +112,16 @@ export function renderHabitsPanel(habits: Habits): string {
     .cursor { fill: ${T.fg}; animation: blink 1.1s steps(1) infinite; }
     @keyframes blink { 50% { opacity: 0; } }
   </style>
-  <clipPath id="window"><rect width="${WIDTH}" height="${HEIGHT}" rx="12"/></clipPath>
-  <g clip-path="url(#window)">
-    <rect width="${WIDTH}" height="${HEIGHT}" fill="${T.bg}"/>
-    <rect width="${WIDTH}" height="36" fill="${T.bgDark}"/>
-    <circle cx="20" cy="18" r="6" fill="${T.red}"/>
-    <circle cx="40" cy="18" r="6" fill="${T.yellow}"/>
-    <circle cx="60" cy="18" r="6" fill="${T.green}"/>
-    <text class="title" x="${WIDTH / 2}" y="23" text-anchor="middle">${escapeXml(`${handle}@github: ~ — git habits`)}</text>
-    <text class="info" x="${LEFT}" y="${PROMPT_Y}" xml:space="preserve"><tspan class="prompt">❯</tspan> ${escapeXml(`git log --since=1.year --author=${handle} | habits`)}</text>
-    ${body}
-    <text class="info" x="${LEFT}" y="${cursorY}"><tspan class="prompt">❯</tspan><tspan> </tspan><tspan class="cursor">█</tspan></text>
-  </g>
-  <rect x="0.5" y="0.5" width="${WIDTH - 1}" height="${HEIGHT - 1}" rx="12" fill="none" stroke="${T.border}"/>
+  ${renderWindow(
+    WIDTH,
+    HEIGHT,
+    `${handle}@github: ~ — git habits`,
+    [
+      `<text class="info" x="${LEFT}" y="${PROMPT_Y}" xml:space="preserve"><tspan class="prompt">❯</tspan> ${escapeXml(`git log --since=1.year --author=${handle} | habits`)}</text>`,
+      body,
+      `<text class="info" x="${LEFT}" y="${cursorY}"><tspan class="prompt">❯</tspan><tspan> </tspan><tspan class="cursor">█</tspan></text>`
+    ].join("\n    ")
+  )}
 </svg>
 `;
 }

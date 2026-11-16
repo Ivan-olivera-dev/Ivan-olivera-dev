@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { renderHabitsPanel } from "../src/habits-renderer.ts";
-import { TOKYO_NIGHT } from "../src/card-renderer.ts";
+import { TOKYO_NIGHT } from "../src/theme.ts";
 import type { Habits } from "../src/types.ts";
 
 const byHour = Array<number>(24).fill(0);
