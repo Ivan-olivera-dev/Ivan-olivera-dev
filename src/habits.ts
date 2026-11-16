@@ -3,19 +3,32 @@ import type { Habits } from "./types.ts";
 const YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+/** Hard cap on GraphQL requests per refresh, so a runaway pagination can never hang the Action. */
+const MAX_REQUESTS = 50;
+
 // Public, non-fork repositories only: a local token can see private repos (see L7).
-const QUERY = `
-  query($login: String!, $since: GitTimestamp!) {
+const REPOS_QUERY = `
+  query($login: String!, $cursor: String) {
     user(login: $login) {
-      repositories(first: 100, ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
-        nodes {
-          defaultBranchRef {
-            target {
-              ... on Commit {
-                history(first: 100, since: $since) {
-                  nodes { committedDate author { user { login } } }
-                }
-              }
+      id
+      repositories(first: 100, after: $cursor, ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
+        pageInfo { hasNextPage endCursor }
+        nodes { name defaultBranchRef { name } }
+      }
+    }
+  }
+`;
+
+// `author: { id }` filters on the server, so only the user's own commits are transferred.
+const HISTORY_QUERY = `
+  query($owner: String!, $name: String!, $since: GitTimestamp!, $userId: ID!, $cursor: String) {
+    repository(owner: $owner, name: $name) {
+      defaultBranchRef {
+        target {
+          ... on Commit {
+            history(first: 100, after: $cursor, since: $since, author: { id: $userId }) {
+              pageInfo { hasNextPage endCursor }
+              nodes { committedDate }
             }
           }
         }
@@ -24,9 +37,21 @@ const QUERY = `
   }
 `;
 
+class HabitsUnavailable extends Error {}
+class RequestLimitReached extends Error {}
+
+interface PageInfo {
+  hasNextPage: boolean;
+  endCursor: string | null;
+}
+
 /**
- * Commit timestamps authored by `username` on the default branch of their public repositories.
- * Returns [] when no token is available or the API fails, so callers never invent numbers.
+ * Commit timestamps authored by `username` on the default branch of their public repositories,
+ * paginating every repository page and every history page.
+ *
+ * Returns [] when no token is available or any request fails, including mid-pagination: a partial
+ * year would render as if it were real data, while [] lets the caller keep the previous panel.
+ * The only partial result is the MAX_REQUESTS safety stop, which is warned about explicitly.
  */
 export async function fetchCommitTimestamps(
   username: string,
@@ -35,7 +60,10 @@ export async function fetchCommitTimestamps(
 ): Promise<string[]> {
   if (!token) return [];
 
-  try {
+  let requests = 0;
+  const graphql = async (query: string, variables: Record<string, unknown>): Promise<any> => {
+    if (requests >= MAX_REQUESTS) throw new RequestLimitReached();
+    requests++;
     const res = await fetch("https://api.github.com/graphql", {
       method: "POST",
       headers: {
@@ -43,34 +71,53 @@ export async function fetchCommitTimestamps(
         "Content-Type": "application/json",
         "User-Agent": "ivan-olivera-dev-profile-card"
       },
-      body: JSON.stringify({ query: QUERY, variables: { login: username, since } })
+      body: JSON.stringify({ query, variables })
     });
+    if (!res.ok) throw new HabitsUnavailable(`GitHub API returned ${res.status}; commit habits are unavailable.`);
+    const data = ((await res.json()) as any)?.data;
+    if (!data) throw new HabitsUnavailable("GitHub API returned no data; commit habits are unavailable.");
+    return data;
+  };
 
-    if (!res.ok) {
-      console.warn(`GitHub API returned ${res.status}; commit habits are unavailable.`);
-      return [];
-    }
-
-    const repos = ((await res.json()) as any)?.data?.user?.repositories?.nodes;
-    if (!Array.isArray(repos)) {
-      console.warn("GitHub API returned no repositories; commit habits are unavailable.");
-      return [];
-    }
-
-    const login = username.toLowerCase();
-    const timestamps: string[] = [];
-    for (const repo of repos) {
-      for (const commit of repo?.defaultBranchRef?.target?.history?.nodes ?? []) {
-        if (commit?.author?.user?.login?.toLowerCase() === login && commit.committedDate) {
-          timestamps.push(commit.committedDate);
-        }
+  const timestamps: string[] = [];
+  try {
+    let repoCursor: string | null = null;
+    do {
+      const user = (await graphql(REPOS_QUERY, { login: username, cursor: repoCursor }))?.user;
+      const repos = user?.repositories;
+      if (!user?.id || !Array.isArray(repos?.nodes)) {
+        throw new HabitsUnavailable("GitHub API returned no repositories; commit habits are unavailable.");
       }
-    }
+
+      for (const repo of repos.nodes) {
+        if (!repo?.name || !repo.defaultBranchRef) continue; // empty repository: no history to read
+        let historyCursor: string | null = null;
+        do {
+          const variables = { owner: username, name: repo.name, since, userId: user.id, cursor: historyCursor };
+          const history = (await graphql(HISTORY_QUERY, variables))?.repository?.defaultBranchRef?.target?.history;
+          if (!Array.isArray(history?.nodes)) {
+            throw new HabitsUnavailable(`GitHub API returned no history for ${repo.name}; commit habits are unavailable.`);
+          }
+          for (const commit of history.nodes) if (commit?.committedDate) timestamps.push(commit.committedDate);
+          historyCursor = nextCursor(history.pageInfo);
+        } while (historyCursor);
+      }
+      repoCursor = nextCursor(repos.pageInfo);
+    } while (repoCursor);
     return timestamps;
   } catch (error) {
-    console.warn("Error fetching commit history; commit habits are unavailable:", error);
+    if (error instanceof RequestLimitReached) {
+      console.warn(`Stopped after ${MAX_REQUESTS} requests; commit habits use the ${timestamps.length} commits collected so far.`);
+      return timestamps;
+    }
+    if (error instanceof HabitsUnavailable) console.warn(error.message);
+    else console.warn("Error fetching commit history; commit habits are unavailable:", error);
     return [];
   }
+}
+
+function nextCursor(pageInfo: PageInfo | undefined): string | null {
+  return pageInfo?.hasNextPage && pageInfo.endCursor ? pageInfo.endCursor : null;
 }
 
 function peakIndex(counts: number[]): number | null {

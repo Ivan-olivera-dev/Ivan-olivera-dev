@@ -23,17 +23,18 @@ async function writeAsset(outputPath: string, svg: string): Promise<void> {
   await writeFile(outputPath, svg, "utf-8");
 }
 
-/** Same rule as the card: without commit data an existing panel is kept, never blanked. */
+/** Same rule as the card: without valid commit data an existing panel is kept, never blanked. */
 async function refreshHabits(root: string, fetchHabits: () => Promise<string[]>, log: (message: string) => void) {
   const outputPath = join(root, "assets/habits.svg");
-  const timestamps = await fetchHabits();
+  // Decide on the aggregate, not the raw batch: a batch of only invalid timestamps has 0 valid commits.
+  const habits = aggregateHabits(await fetchHabits());
 
-  if (timestamps.length === 0 && existsSync(outputPath)) {
+  if (habits.total === 0 && existsSync(outputPath)) {
     log("Commit data unavailable; keeping the previous habits panel.");
     return;
   }
 
-  await writeAsset(outputPath, renderHabitsPanel(aggregateHabits(timestamps)));
+  await writeAsset(outputPath, renderHabitsPanel(habits));
   log(`Generated habits panel at ${outputPath}`);
 }
 

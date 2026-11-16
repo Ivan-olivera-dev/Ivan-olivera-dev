@@ -109,3 +109,27 @@ test("S5: refreshCard writes a first habits panel without inventing commits", as
 
   assert.ok((await readFile(join(root, "assets/habits.svg"), "utf-8")).includes("no public commits in the last year"));
 });
+
+test("S6: refreshCard keeps the previous habits panel when every timestamp is invalid", async (t) => {
+  const root = await workspace(true);
+  t.after(() => rm(root, { recursive: true, force: true }));
+  await writeFile(join(root, "assets/habits.svg"), "<svg>previous habits</svg>", "utf-8");
+  const logs: string[] = [];
+
+  await refreshCard({ root, fetchData: async () => live, fetchHabits: async () => ["nope", "bad"], log: (m) => logs.push(m) });
+
+  assert.equal(await readFile(join(root, "assets/habits.svg"), "utf-8"), "<svg>previous habits</svg>");
+  assert.deepEqual(logs, [
+    `Generated profile card at ${join(root, "assets/profile-card.svg")}`,
+    "Commit data unavailable; keeping the previous habits panel."
+  ]);
+});
+
+test("S6: refreshCard writes a first empty-state habits panel from an all-invalid batch", async (t) => {
+  const root = await workspace(false);
+  t.after(() => rm(root, { recursive: true, force: true }));
+
+  await refreshCard({ root, fetchData: async () => offline, fetchHabits: async () => ["nope", "bad"], log: () => {} });
+
+  assert.ok((await readFile(join(root, "assets/habits.svg"), "utf-8")).includes("no public commits in the last year"));
+});
