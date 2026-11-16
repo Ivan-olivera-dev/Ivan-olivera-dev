@@ -10,8 +10,8 @@ const AVATAR_URL = "https://avatars.githubusercontent.com/u/294240201?v=4&s=460"
 
 // Tuned for the 460px avatar: frame head and collar, drop the empty margins.
 const CROP = "330x360+65+55";
-const COLUMNS = 56;
-const ROWS = 34;
+const COLUMNS = 66;
+const ROWS = 40;
 const BACKGROUND_THRESHOLD = 230;
 
 async function loadSource(source: string): Promise<Uint8Array> {

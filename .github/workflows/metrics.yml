@@ -37,22 +37,22 @@ jobs:
         run: |
           npm test
 
-      - name: Generate Telemetry SVG
+      - name: Generate Profile Card SVG
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm run generate
 
-      - name: Commit and Push Updated Telemetry
+      - name: Commit and Push Updated Profile Card
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          if [ -n "$(git status --porcelain assets/profile-telemetry.svg)" ]; then
-            git add assets/profile-telemetry.svg
-            git commit -m "chore(telemetry): update profile telemetry dashboard [skip ci]"
+          if [ -n "$(git status --porcelain assets/profile-card.svg)" ]; then
+            git add assets/profile-card.svg
+            git commit -m "chore(card): refresh profile card [skip ci]"
             git push
-            echo "Telemetry updated and pushed successfully."
+            echo "Profile card updated and pushed."
           else
-            echo "No changes detected in telemetry."
+            echo "No changes in the profile card."
           fi

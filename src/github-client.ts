@@ -1,73 +1,38 @@
-import type { SystemMetrics } from "./types.ts";
+import { PROFILE } from "./profile.ts";
+import type { ProfileData, ProfileStats } from "./types.ts";
 
-const DEFAULT_METRICS: SystemMetrics = {
-  username: "Ivan-olivera-dev",
-  name: "Iván Olivera González",
-  role: "Software Engineer — Backend, Systems & Agentic Workflows",
-  location: "Valencia, ES",
-  website: "ivanolivera.dev",
-  cardUrl: "card.ivanolivera.dev",
-  summaryLines: [
-    "Designing and building backend services,",
-    "system architectures, and practical",
-    "multi-agent development workflows."
-  ],
-  environment: "Node.js · TypeScript · Python · Docker · Linux",
-  totalRepos: 12,
-  totalContributions: 480,
-  languages: [
-    { name: "TypeScript & Node.js", percentage: 44, color: "#10b981" },
-    { name: "Python", percentage: 26, color: "#34d399" },
-    { name: "Linux & Shell (Bash)", percentage: 18, color: "#6ee7b7" },
-    { name: "Java", percentage: 12, color: "#52525b" }
-  ],
-  currentWork: [
-    {
-      title: "Agentic Workflows & ODD",
-      subtitle: "Organic-driven dev & tooling"
-    },
-    {
-      title: "Backend & Systems",
-      subtitle: "APIs, Docker infra & Linux"
-    }
-  ]
-};
+const UNAVAILABLE: ProfileStats = { repos: null, stars: null, followers: null, contributions: null };
+const LANGUAGE_LIMIT = 4;
 
-const PALETTE = ["#10b981", "#34d399", "#6ee7b7", "#52525b"];
-
-export async function fetchSystemMetrics(
-  username = "Ivan-olivera-dev",
-  token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN
-): Promise<SystemMetrics> {
-  if (!token) {
-    return DEFAULT_METRICS;
-  }
-
-  const query = `
-    query($login: String!) {
-      user(login: $login) {
-        repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
-          totalCount
-          nodes {
-            languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
-              edges {
-                size
-                node {
-                  name
-                }
-              }
-            }
+const QUERY = `
+  query($login: String!) {
+    user(login: $login) {
+      followers { totalCount }
+      repositories(first: 100, ownerAffiliations: OWNER, isFork: false, privacy: PUBLIC) {
+        totalCount
+        nodes {
+          stargazerCount
+          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+            edges { size node { name } }
           }
         }
-        contributionsCollection {
-          totalCommitContributions
-          restrictedContributionsCount
-          totalPullRequestContributions
-          totalIssueContributions
-        }
+      }
+      contributionsCollection {
+        contributionCalendar { totalContributions }
       }
     }
-  `;
+  }
+`;
+
+function offline(): ProfileData {
+  return { ...PROFILE, stats: { ...UNAVAILABLE }, languages: [] };
+}
+
+export async function fetchProfileData(
+  username = PROFILE.username,
+  token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN
+): Promise<ProfileData> {
+  if (!token) return offline();
 
   try {
     const res = await fetch("https://api.github.com/graphql", {
@@ -75,65 +40,54 @@ export async function fetchSystemMetrics(
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        "User-Agent": "ivan-olivera-dev-dashboard"
+        "User-Agent": "ivan-olivera-dev-profile-card"
       },
-      body: JSON.stringify({ query, variables: { login: username } })
+      body: JSON.stringify({ query: QUERY, variables: { login: username } })
     });
 
     if (!res.ok) {
-      console.warn(`GitHub API returned ${res.status}. Using default profile metrics.`);
-      return DEFAULT_METRICS;
+      console.warn(`GitHub API returned ${res.status}; rendering stats as unavailable.`);
+      return offline();
     }
 
-    const json = (await res.json()) as any;
-    const userData = json?.data?.user;
-
-    if (!userData) {
-      return DEFAULT_METRICS;
+    const user = ((await res.json()) as any)?.data?.user;
+    if (!user) {
+      console.warn("GitHub API returned no user; rendering stats as unavailable.");
+      return offline();
     }
 
-    const repos = userData.repositories?.nodes || [];
-    const totalRepos = userData.repositories?.totalCount || repos.length;
-    const langTotals: Record<string, number> = {};
+    const repos: any[] = user.repositories?.nodes ?? [];
+    const langBytes = new Map<string, number>();
+    let stars = 0;
 
     for (const repo of repos) {
-      const edges = repo.languages?.edges || [];
-      for (const edge of edges) {
-        const name = edge.node.name;
-        const size = edge.size || 0;
-        langTotals[name] = (langTotals[name] || 0) + size;
+      stars += repo.stargazerCount ?? 0;
+      for (const edge of repo.languages?.edges ?? []) {
+        langBytes.set(edge.node.name, (langBytes.get(edge.node.name) ?? 0) + (edge.size ?? 0));
       }
     }
 
-    const totalLangBytes = Object.values(langTotals).reduce((acc, curr) => acc + curr, 0);
-    const sortedLangs = Object.entries(langTotals)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 4);
-
-    const calculatedLanguages =
-      sortedLangs.length > 0 && totalLangBytes > 0
-        ? sortedLangs.map(([name, size], index) => ({
-            name,
-            percentage: Math.max(1, Math.round((size / totalLangBytes) * 100)),
-            color: PALETTE[index] || "#52525b"
-          }))
-        : DEFAULT_METRICS.languages;
-
-    const contrib = userData.contributionsCollection || {};
-    const totalContributions =
-      (contrib.totalCommitContributions || 0) +
-      (contrib.restrictedContributionsCount || 0) +
-      (contrib.totalPullRequestContributions || 0) +
-      (contrib.totalIssueContributions || 0);
+    const total = [...langBytes.values()].reduce((sum, size) => sum + size, 0);
+    const languages =
+      total > 0
+        ? [...langBytes.entries()]
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, LANGUAGE_LIMIT)
+            .map(([name, size]) => ({ name, percentage: Math.max(1, Math.round((size / total) * 100)) }))
+        : [];
 
     return {
-      ...DEFAULT_METRICS,
-      totalRepos: totalRepos > 0 ? totalRepos : DEFAULT_METRICS.totalRepos,
-      totalContributions: totalContributions > 0 ? totalContributions : DEFAULT_METRICS.totalContributions,
-      languages: calculatedLanguages
+      ...PROFILE,
+      stats: {
+        repos: user.repositories?.totalCount ?? null,
+        stars,
+        followers: user.followers?.totalCount ?? null,
+        contributions: user.contributionsCollection?.contributionCalendar?.totalContributions ?? null
+      },
+      languages
     };
   } catch (error) {
-    console.warn("Error fetching GitHub metrics:", error);
-    return DEFAULT_METRICS;
+    console.warn("Error fetching GitHub data; rendering stats as unavailable:", error);
+    return offline();
   }
 }
