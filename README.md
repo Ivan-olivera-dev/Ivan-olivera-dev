@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="./assets/metrics.svg" alt="GitHub metrics: isometric contribution calendar, most used languages, coding habits, achievements and recent activity." width="100%" />
+  <img src="./assets/metrics.svg" alt="GitHub metrics: isometric contribution calendar and most used languages." width="100%" />
 </p>
 
 <p align="center">

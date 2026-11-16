@@ -86,7 +86,7 @@ jobs:
           base: ""
           config_timezone: Europe/Madrid
           config_display: large
-          config_order: isocalendar, languages, habits, achievements, activity
+          config_order: isocalendar, languages
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
           plugin_languages: yes
@@ -94,16 +94,6 @@ jobs:
           plugin_languages_details: percentage
           plugin_languages_limit: 6
           plugin_languages_colors: "0:#7aa2f7, 1:#e0af68, 2:#9ece6a, 3:#bb9af7, 4:#7dcfff, 5:#f7768e"
-          plugin_habits: yes
-          plugin_habits_facts: yes
-          plugin_habits_charts: yes
-          plugin_habits_days: 30
-          plugin_achievements: yes
-          plugin_achievements_display: compact
-          plugin_achievements_limit: 8
-          plugin_activity: yes
-          plugin_activity_limit: 5
-          plugin_activity_days: 14
           extras_css: |
             /* Tokyo Night */
             svg { color: #a9b1d6; }

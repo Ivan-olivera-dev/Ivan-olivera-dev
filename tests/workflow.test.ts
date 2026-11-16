@@ -7,14 +7,13 @@ const workflow = readFileSync(".github/workflows/metrics.yml", "utf8");
 const count = (needle: string): number => workflow.split(needle).length - 1;
 
 test("S3: lowlighter renders the chosen blocks with METRICS_TOKEN and Tokyo Night CSS", () => {
-  for (const plugin of [
-    "plugin_isocalendar: yes",
-    "plugin_languages: yes",
-    "plugin_habits: yes",
-    "plugin_achievements: yes",
-    "plugin_activity: yes",
-  ]) {
+  for (const plugin of ["plugin_isocalendar: yes", "plugin_languages: yes"]) {
     assert.ok(workflow.includes(plugin), `missing ${plugin}`);
+  }
+  assert.ok(workflow.includes("config_order: isocalendar, languages\n"));
+  // Broken upstream: PushEvent payloads lost `commits` and Projects (classic) was sunset (lowlighter#1706).
+  for (const broken of ["plugin_habits", "plugin_achievements", "plugin_activity"]) {
+    assert.ok(!workflow.includes(broken), `${broken} renders an "Unexpected error" block`);
   }
   assert.ok(workflow.includes("token: ${{ secrets.METRICS_TOKEN }}"));
   const css = workflow.slice(workflow.indexOf("extras_css:"));
