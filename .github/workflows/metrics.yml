@@ -54,8 +54,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          if [ -n "$(git status --porcelain assets/profile-card.svg)" ]; then
-            git add assets/profile-card.svg
+          if [ -n "$(git status --porcelain assets/profile-card.svg assets/habits.svg)" ]; then
+            git add assets/profile-card.svg assets/habits.svg
             git commit -m "chore(card): refresh profile card [skip ci]"
             git pull --rebase
             git push

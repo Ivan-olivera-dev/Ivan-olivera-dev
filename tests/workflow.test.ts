@@ -48,3 +48,13 @@ test("the card push rebases before pushing", () => {
   assert.ok(pull >= 0, "git pull --rebase missing");
   assert.ok(pull < push, "git pull --rebase must precede git push");
 });
+
+test("S5: the card push step also commits assets/habits.svg", () => {
+  const start = workflow.indexOf("- name: Commit and Push Updated Profile Card");
+  const end = workflow.indexOf("- name:", start + 1);
+  assert.ok(start >= 0 && end > start);
+  const step = workflow.slice(start, end);
+  assert.ok(step.includes("git status --porcelain assets/profile-card.svg assets/habits.svg"), "checks both assets");
+  assert.ok(step.includes("git add assets/profile-card.svg assets/habits.svg"), "stages both assets");
+  assert.ok(step.indexOf("git add") < step.indexOf("git commit"));
+});

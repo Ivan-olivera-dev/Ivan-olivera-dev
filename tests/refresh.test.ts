@@ -62,3 +62,50 @@ test("refreshCard overwrites the card when live data is available", async (t) =>
   assert.ok(svg.startsWith("<svg") && svg.includes(">63<") && svg.includes("TypeScript 100%"));
   assert.deepEqual(logs, [`Generated profile card at ${join(root, "assets/profile-card.svg")}`]);
 });
+
+test("S5: refreshCard writes assets/habits.svg from live commit timestamps", async (t) => {
+  const root = await workspace(true);
+  t.after(() => rm(root, { recursive: true, force: true }));
+  await writeFile(join(root, "assets/habits.svg"), "<svg>previous habits</svg>", "utf-8");
+  const logs: string[] = [];
+
+  await refreshCard({
+    root,
+    fetchData: async () => live,
+    fetchHabits: async () => ["2026-07-01T20:30:00Z", "2026-07-01T20:45:00Z", "2026-01-15T08:00:00Z"],
+    log: (m) => logs.push(m)
+  });
+  const svg = await readFile(join(root, "assets/habits.svg"), "utf-8");
+
+  assert.ok(svg.startsWith("<svg") && svg.includes("git habits"));
+  assert.match(svg, /3<\/tspan> commits/);
+  assert.ok(svg.includes("peak <tspan class=\"key\">22:00–23:00"));
+  assert.deepEqual(logs, [
+    `Generated profile card at ${join(root, "assets/profile-card.svg")}`,
+    `Generated habits panel at ${join(root, "assets/habits.svg")}`
+  ]);
+});
+
+test("S5: refreshCard keeps the previous habits panel when commit data is unavailable", async (t) => {
+  const root = await workspace(true);
+  t.after(() => rm(root, { recursive: true, force: true }));
+  await writeFile(join(root, "assets/habits.svg"), "<svg>previous habits</svg>", "utf-8");
+  const logs: string[] = [];
+
+  await refreshCard({ root, fetchData: async () => offline, fetchHabits: async () => [], log: (m) => logs.push(m) });
+
+  assert.equal(await readFile(join(root, "assets/habits.svg"), "utf-8"), "<svg>previous habits</svg>");
+  assert.deepEqual(logs, [
+    "GitHub data unavailable; keeping the previous profile card.",
+    "Commit data unavailable; keeping the previous habits panel."
+  ]);
+});
+
+test("S5: refreshCard writes a first habits panel without inventing commits", async (t) => {
+  const root = await workspace(false);
+  t.after(() => rm(root, { recursive: true, force: true }));
+
+  await refreshCard({ root, fetchData: async () => offline, fetchHabits: async () => [], log: () => {} });
+
+  assert.ok((await readFile(join(root, "assets/habits.svg"), "utf-8")).includes("no public commits in the last year"));
+});

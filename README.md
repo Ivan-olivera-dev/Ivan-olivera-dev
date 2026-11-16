@@ -10,9 +10,13 @@
 </p>
 
 <p align="center">
+  <img src="./assets/habits.svg" alt="Terminal-style ASCII charts of my coding habits: commits by hour of the day (Europe/Madrid) and by weekday over the last year of public repositories." width="100%" />
+</p>
+
+<p align="center">
   <img src="./assets/metrics.svg" alt="GitHub metrics: isometric contribution calendar and most used languages." width="100%" />
 </p>
 
 <p align="center">
-  <sub>The card is rendered from <a href="./src">src/</a> and the metrics by <a href="https://github.com/lowlighter/metrics">lowlighter/metrics</a>, refreshed daily by GitHub Actions.</sub>
+  <sub>The card and the habits panel are rendered from <a href="./src">src/</a> and the metrics by <a href="https://github.com/lowlighter/metrics">lowlighter/metrics</a>, refreshed daily by GitHub Actions.</sub>
 </p>

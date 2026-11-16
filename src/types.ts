@@ -24,3 +24,15 @@ export interface ProfileData extends Profile {
   stats: ProfileStats;
   languages: Array<{ name: string; percentage: number }>;
 }
+
+/** Commit habits from public repositories; `null` peaks mean there were no commits. */
+export interface Habits {
+  total: number;
+  /** Commits per local hour, index 0..23. */
+  byHour: number[];
+  /** Commits per local weekday, Monday first (index 0 = Mon .. 6 = Sun). */
+  byWeekday: number[];
+  peakHour: number | null;
+  peakWeekday: number | null;
+  timeZone: string;
+}
