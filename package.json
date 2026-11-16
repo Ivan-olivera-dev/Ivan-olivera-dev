@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "generate": "node --experimental-strip-types src/index.ts",
+    "portrait": "node --experimental-strip-types scripts/build-portrait.ts",
     "test": "node --experimental-strip-types --test tests/**/*.test.ts"
   },
   "keywords": [
