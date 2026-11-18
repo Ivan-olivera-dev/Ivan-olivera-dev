@@ -11,6 +11,7 @@ test("S3: lowlighter renders the chosen blocks with METRICS_TOKEN and Tokyo Nigh
     assert.ok(workflow.includes(plugin), `missing ${plugin}`);
   }
   assert.ok(workflow.includes("config_order: isocalendar, languages\n"));
+  assert.ok(workflow.includes("plugin_isocalendar_duration: half-year\n"), "isocalendar shows the last six months");
   // Broken upstream: PushEvent payloads lost `commits` and Projects (classic) was sunset (lowlighter#1706).
   for (const broken of ["plugin_habits", "plugin_achievements", "plugin_activity"]) {
     assert.ok(!workflow.includes(broken), `${broken} renders an "Unexpected error" block`);
