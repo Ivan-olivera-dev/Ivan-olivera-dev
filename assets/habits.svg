@@ -56,12 +56,12 @@
     <text class="head" x="600" y="104">commits by weekday</text>
     <text class="info" x="600" y="128" xml:space="preserve"><tspan class="key">Mon</tspan> <tspan fill="#bb9af7">████████████████</tspan><tspan class="track"></tspan> <tspan>32</tspan></text>
     <text class="info" x="600" y="147" xml:space="preserve"><tspan class="key">Tue</tspan> <tspan fill="#7aa2f7">████████</tspan><tspan class="track">░░░░░░░░</tspan> <tspan>15</tspan></text>
-    <text class="info" x="600" y="166" xml:space="preserve"><tspan class="key">Wed</tspan> <tspan fill="#7dcfff">██</tspan><tspan class="track">░░░░░░░░░░░░░░</tspan> <tspan>3</tspan></text>
+    <text class="info" x="600" y="166" xml:space="preserve"><tspan class="key">Wed</tspan> <tspan fill="#7dcfff">██</tspan><tspan class="track">░░░░░░░░░░░░░░</tspan> <tspan>4</tspan></text>
     <text class="info" x="600" y="185" xml:space="preserve"><tspan class="key">Thu</tspan> <tspan fill="#bb9af7">██████████████</tspan><tspan class="track">░░</tspan> <tspan>27</tspan></text>
     <text class="info" x="600" y="204" xml:space="preserve"><tspan class="key">Fri</tspan> <tspan fill="#7dcfff"></tspan><tspan class="track">░░░░░░░░░░░░░░░░</tspan> <tspan>0</tspan></text>
     <text class="info" x="600" y="223" xml:space="preserve"><tspan class="key">Sat</tspan> <tspan fill="#7dcfff">█</tspan><tspan class="track">░░░░░░░░░░░░░░░</tspan> <tspan>1</tspan></text>
     <text class="info" x="600" y="242" xml:space="preserve"><tspan class="key">Sun</tspan> <tspan fill="#7aa2f7">████████</tspan><tspan class="track">░░░░░░░░</tspan> <tspan>16</tspan></text>
-    <text class="info" x="28" y="268" xml:space="preserve"><tspan class="prompt">→</tspan> <tspan class="key">94</tspan> commits<tspan class="dim">  ·  </tspan>busiest day <tspan class="key">Mon</tspan><tspan class="dim">  ·  </tspan>peak <tspan class="key">11:00–12:00</tspan><tspan class="dim">  ·  </tspan><tspan class="host">daytime coder</tspan></text>
+    <text class="info" x="28" y="268" xml:space="preserve"><tspan class="prompt">→</tspan> <tspan class="key">95</tspan> commits<tspan class="dim">  ·  </tspan>busiest day <tspan class="key">Mon</tspan><tspan class="dim">  ·  </tspan>peak <tspan class="key">11:00–12:00</tspan><tspan class="dim">  ·  </tspan><tspan class="host">daytime coder</tspan></text>
     <text class="info" x="28" y="300"><tspan class="prompt">❯</tspan><tspan> </tspan><tspan class="cursor">█</tspan></text>
   </g>
   <rect x="0.5" y="0.5" width="899" height="329" rx="12" fill="none" stroke="#292e42"/>
