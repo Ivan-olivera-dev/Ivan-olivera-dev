@@ -36,9 +36,9 @@
     <text class="bar" data-hour="9"><tspan x="226" y="218" fill="#7dcfff">██</tspan></text>
     <text class="bar" data-hour="10"><tspan x="248" y="203" fill="#7cb9fb">▇▇</tspan><tspan x="248" y="218" fill="#7cb9fb">██</tspan></text>
     <text class="bar" data-hour="11"><tspan x="270" y="128" fill="#bb9af7">██</tspan><tspan x="270" y="143" fill="#bb9af7">██</tspan><tspan x="270" y="158" fill="#bb9af7">██</tspan><tspan x="270" y="173" fill="#bb9af7">██</tspan><tspan x="270" y="188" fill="#bb9af7">██</tspan><tspan x="270" y="203" fill="#bb9af7">██</tspan><tspan x="270" y="218" fill="#bb9af7">██</tspan></text>
-    <text class="bar" data-hour="12"><tspan x="292" y="218" fill="#7dcfff">██</tspan></text>
-    <text class="bar" data-hour="13"><tspan x="314" y="218" fill="#7dcfff">▇▇</tspan></text>
-    <text class="bar" data-hour="14"><tspan x="336" y="218" fill="#7dcfff">▆▆</tspan></text>
+    <text class="bar" data-hour="12"><tspan x="292" y="203" fill="#7cb9fb">▅▅</tspan><tspan x="292" y="218" fill="#7cb9fb">██</tspan></text>
+    <text class="bar" data-hour="13"><tspan x="314" y="203" fill="#7dcfff">▂▂</tspan><tspan x="314" y="218" fill="#7dcfff">██</tspan></text>
+    <text class="bar" data-hour="14"><tspan x="336" y="218" fill="#7dcfff">▇▇</tspan></text>
     <text class="bar" data-hour="15"><tspan x="358" y="218" class="track">··</tspan></text>
     <text class="bar" data-hour="16"><tspan x="380" y="218" class="track">··</tspan></text>
     <text class="bar" data-hour="17"><tspan x="402" y="188" fill="#7cb9fb">▂▂</tspan><tspan x="402" y="203" fill="#7cb9fb">██</tspan><tspan x="402" y="218" fill="#7cb9fb">██</tspan></text>
@@ -59,9 +59,9 @@
     <text class="info" x="600" y="166" xml:space="preserve"><tspan class="key">Wed</tspan> <tspan fill="#9b9ef7">██████████</tspan><tspan class="track">░░░░░░</tspan> <tspan>47</tspan></text>
     <text class="info" x="600" y="185" xml:space="preserve"><tspan class="key">Thu</tspan> <tspan fill="#7cb9fb">██████</tspan><tspan class="track">░░░░░░░░░░</tspan> <tspan>27</tspan></text>
     <text class="info" x="600" y="204" xml:space="preserve"><tspan class="key">Fri</tspan> <tspan fill="#7aa2f7">█████████</tspan><tspan class="track">░░░░░░░</tspan> <tspan>40</tspan></text>
-    <text class="info" x="600" y="223" xml:space="preserve"><tspan class="key">Sat</tspan> <tspan fill="#7dcfff">█</tspan><tspan class="track">░░░░░░░░░░░░░░░</tspan> <tspan>1</tspan></text>
+    <text class="info" x="600" y="223" xml:space="preserve"><tspan class="key">Sat</tspan> <tspan fill="#7dcfff">███</tspan><tspan class="track">░░░░░░░░░░░░░</tspan> <tspan>13</tspan></text>
     <text class="info" x="600" y="242" xml:space="preserve"><tspan class="key">Sun</tspan> <tspan fill="#7cb9fb">███</tspan><tspan class="track">░░░░░░░░░░░░░</tspan> <tspan>16</tspan></text>
-    <text class="info" x="28" y="268" xml:space="preserve"><tspan class="prompt">→</tspan> <tspan class="key">237</tspan> commits<tspan class="dim">  ·  </tspan>busiest day <tspan class="key">Tue</tspan><tspan class="dim">  ·  </tspan>peak <tspan class="key">11:00–12:00</tspan><tspan class="dim">  ·  </tspan><tspan class="host">daytime coder</tspan></text>
+    <text class="info" x="28" y="268" xml:space="preserve"><tspan class="prompt">→</tspan> <tspan class="key">249</tspan> commits<tspan class="dim">  ·  </tspan>busiest day <tspan class="key">Tue</tspan><tspan class="dim">  ·  </tspan>peak <tspan class="key">11:00–12:00</tspan><tspan class="dim">  ·  </tspan><tspan class="host">daytime coder</tspan></text>
     <text class="info" x="28" y="300"><tspan class="prompt">❯</tspan><tspan> </tspan><tspan class="cursor">█</tspan></text>
   </g>
   <rect x="0.5" y="0.5" width="899" height="329" rx="12" fill="none" stroke="#292e42"/>
